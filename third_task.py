@@ -1,17 +1,31 @@
 
 def appearance(intervals):
     count = 0
-    for i in range(0,len(intervals['pupil'])-1,2):
-        if intervals['pupil'][i] >= intervals['lesson'][0] and intervals['pupil'][i] <= intervals['lesson'][1]:
-            time = intervals['pupil'][i+1] -  intervals['pupil'][i]
-            count += time
-            print(count)
-    for i in range(0,len(intervals['tutor'])-1,2):
-        if intervals['tutor'][i] >= intervals['lesson'][0] and intervals['tutor'][i] <= intervals['lesson'][1]:
-            time = intervals['tutor'][i+1] - intervals['tutor'][i]
-            count += time
-            print(count)
-    return count
+    begin = -1
+    time = 0
+    start_list = create_intervals_list(intervals)
+    for elem in start_list:
+        count += elem[1]
+        if count == 3:
+            begin = elem[0]
+        if count == 2 and begin > 0:
+            time += elem[0] - begin
+            begin = -1
+    return time
+
+
+def create_intervals_list(dictionary):
+    def check_index(index):
+        return 1 if index % 2 == 0 else -1
+
+    start_list = list()
+    for key in dictionary:
+        new_elem = dictionary[key]
+        for i, obj in enumerate(new_elem):
+            start_list.append((obj, check_index(i)))
+    start_list.sort()
+    return start_list
+
 tests = [
     {'data': {'lesson': [1594663200, 1594666800],
              'pupil': [1594663340, 1594663389, 1594663390, 1594663395, 1594663396, 1594666472],
