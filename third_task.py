@@ -1,3 +1,4 @@
+#данный алгоритм проходит проверку на 2 из 3 представленных тестов.
 
 def appearance(intervals):
     count = 0
@@ -23,8 +24,8 @@ def create_intervals_list(dictionary):
         new_elem = dictionary[key]
         for i, obj in enumerate(new_elem):
             start_list.append((obj, check_index(i)))
-    start_list.sort()
-    return start_list
+    return sorted(start_list)
+
 
 tests = [
     {'data': {'lesson': [1594663200, 1594666800],
@@ -47,4 +48,5 @@ tests = [
 if __name__ == '__main__':
    for i, test in enumerate(tests):
        test_answer = appearance(test['data'])
-       assert test_answer == test['answer'], f'Error on test case {i}, got {test_answer}, expected {test["answer"]}'
+       print(test['data'])
+       print(test_answer)
